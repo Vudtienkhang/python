@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="dashboard-container" id="box">
+        <h1>Chào mừng Admin {{ username }}!</h1>
+        <p>Danh sách người dùng hiện có:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên người dùng</th>
+                    <th>Email</th>
+                    <th>Vai trò</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}">
+                            <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Thêm tài khoản mới</h2>
+        <div class="form">
+            <form method="POST" action="{{ url_for('add_user') }}" class="add-user-form">
+                <input type="text" name="username" placeholder="Tên người dùng" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Mật khẩu" required>
+                <div class="button">
+                    <select name="role" required>
+                        <option value="user">Người dùng</option>
+                        <option value="admin">Quản trị viên</option>
+                    </select>
+                    <button type="submit">Thêm tài khoản</button>
+                </div>
+            </form>
+    
+            <button><a href="{{ url_for('logout') }}">Đăng xuất</a></button>
+        </div>
+    </div>
+</body>
+</html>
