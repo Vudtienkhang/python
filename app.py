@@ -7,7 +7,6 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 bcrypt = Bcrypt(app)
 
-# Thiết lập Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -101,7 +100,7 @@ def login():
 def admin_dashboard():
     if current_user.role != 'admin':
         flash("Bạn không có quyền truy cập trang này!", "danger")
-        return redirect(url_for('user_dashboard'))  # Chuyển về trang của user
+        return redirect(url_for('user_dashboard'))  
 
     cursor.execute("SELECT id, username, email, role FROM user")
     users = cursor.fetchall()
@@ -114,7 +113,7 @@ def admin_dashboard():
 def delete_user(user_id):
     if current_user.role != 'admin':
         flash("Bạn không có quyền thực hiện hành động này!", "danger")
-        return redirect(url_for('admin_dashboard'))  # Chuyển về trang admin_dashboard
+        return redirect(url_for('admin_dashboard'))  
 
     try:
         cursor.execute("DELETE FROM user WHERE id = %s", (user_id,))
@@ -123,7 +122,7 @@ def delete_user(user_id):
     except mysql.connector.Error as err:
         flash(f"Lỗi khi xóa người dùng: {err}", "danger")
 
-    return redirect(url_for('admin_dashboard'))  # Chuyển về trang admin_dashboard
+    return redirect(url_for('admin_dashboard')) 
 
 
 # Thêm tài khoản

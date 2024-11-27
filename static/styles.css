@@ -8,7 +8,7 @@ body {
 
 /* Container */
 .dashboard-container {
-    width: 60%;
+    width: 500px;
     margin: 50px auto;
     background: white;
     padding: 20px;
@@ -87,6 +87,7 @@ button a:hover {
 
 .auth-form{
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 30px;
 }
